@@ -14,6 +14,9 @@ var TLBLoader = me.ScreenObject.extend({
 	{
 		// call the parent constructor
 		this.parent(true);
+		
+		// background image
+		this.backgroundImg = me.loader.getImage("loader");		
 
 		// setup a callback
 		me.loader.onProgress = this.onProgressUpdate.bind(this);
@@ -66,7 +69,8 @@ var TLBLoader = me.ScreenObject.extend({
 
 	draw : function(context) 
 	{
-		
+		// display the background
+		context.drawImage(this.backgroundImg, 0 ,0);	
 		
 	},
 	
@@ -77,8 +81,9 @@ var TLBLoader = me.ScreenObject.extend({
 	
 	onDestroyEvent : function()
 	{
-
-
+		// "nullify" all objects
+		this.backgroundImg = null;
+	
   	},
 
 

@@ -1,14 +1,12 @@
-/* -----
+	/* -----
+	Object Entities	
+	------	*/
 
-	Object Entities
-		
-	------			*/
-
-	/************************************************************************************/
-	/*																					*/
-	/*			a player entity															*/
-	/*																					*/
-	/************************************************************************************/
+	/********************************************************************************/
+	/*										*/
+	/*			a player entity						*/
+	/*										*/
+	/********************************************************************************/
 	var MainEntity = me.ObjectEntity.extend(
 	{	
 
@@ -23,8 +21,8 @@
 			this.parent(x, y, settings);
 			
 			// set h/v velocity
-			this.setVelocity(7, 2);
-			this.setMaxVelocity(7, 5);
+			this.setVelocity(4, 2);
+			this.setMaxVelocity(4, 4);
 			
 			// add friction
 			this.setFriction(0.5);
@@ -33,10 +31,10 @@
 			me.game.viewport.follow(this.pos);
 			
 			// walking animation
-			this.addAnimation ("walk",  [4,5,6,7]);
+			this.addAnimation ("walk",  [1,2,3,4,5,6,7]);
 			
 			// flying animation
-			this.addAnimation ("fly",  [8,9]);
+			this.addAnimation ("climb",  [16,17,18,19,20]);
 			
 			// set default one
 			this.setCurrentAnimation("walk");
@@ -68,34 +66,36 @@
 				this.flipX(false);
 			}
 			
-			if (me.input.isKeyPressed('fly'))
+			else if (me.input.isKeyPressed('up'))
 			{	
-				this.vel.y -= this.accel.y * me.timer.tick;
-				
-				// make sure we stay in the map limit
-				if (this.pos.y + this.vel.y < 0) 
-				{
-					// there is no proper bounciness support yet 
-					// in melonJS, so let's just do this for now
-					this.vel.y = this.maxVel.y * me.timer.tick;
-				}
+				this.doClimb(true);
+			}
 			
+			else if (me.input.isKeyPressed('down'))
+			{	
+				this.doClimb(false);
+			}
+			
+			else 
+			{
+				// depends ?
 			}
 			
 			
 			// check & update player movement
 			this.updateMovement();
 			
-			// if flying
-			if (me.input.keyStatus('fly'))
+			// if climbing 
+			if (me.input.keyStatus('up') || me.input.keyStatus('down')) 
 			{	
 				// change animatiom if necessary
-				if (!this.isCurrentAnimation("fly"))
+				if (!this.isCurrentAnimation("climb"))
 				{
-				 	this.setCurrentAnimation("fly");
+				 	this.setCurrentAnimation("climb");
 				}
 			}
-			//falling / walking
+
+			// walking
 			else if (!this.setCurrentAnimation("walk"))
 			{
 				this.setCurrentAnimation("walk");	
@@ -106,7 +106,7 @@
 			if (this.vel.x!=0||this.vel.y!=0)
 			{
 				// update objet animation is necessary
-				if (this.isCurrentAnimation("walk") && this.vel.x==0)
+				if (this.isCurrentAnimation("climb") && this.vel.x==0)
 				{
 					// don't update animation
 					return true

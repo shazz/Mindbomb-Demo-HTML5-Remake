@@ -41,25 +41,18 @@ var jsApp	=
 		// manually load the background, since we need it to be loaded for the loader...
 		me.loader.load({name: "loader", type:"image", src: "data/background/loader.png"}, function() 
 		{
-			// same for the brown font
-			me.loader.load({name: "loader_font_brown", type:"image", src: "data/fonts/fonts15x16_brown.png"}, function() 
-			{
-				// and for the white font
-				me.loader.load({name: "loader_font_white", type:"image", src: "data/fonts/fonts15x16.png"}, function() 
-				{
-					// set all resources to be loaded
-					me.loader.onload = jsApp.loaded.bind(jsApp);
-				
-					// set all resources to be loaded
-					me.loader.preload(g_resources);
+			// set all resources to be loaded
+			me.loader.onload = jsApp.loaded.bind(jsApp);
 
-					// set our custom loader
-					me.state.set(me.state.LOADING, new TCBLoader());
-				
-					// load everything & display the loading screen
-					me.state.change(me.state.LOADING);
-				}, null);
-			}, null);
+			// set all resources to be loaded
+			me.loader.preload(g_resources);
+
+			// set our custom loader
+			me.state.set(me.state.LOADING, new TLBLoader());
+
+			// load everything & display the loading screen
+			me.state.change(me.state.LOADING);
+
 		}, null);
 	},
 	
@@ -72,7 +65,7 @@ var jsApp	=
 	loaded: function ()
 	{
 		// start the main menu music
-		this.player.LoadAndRun('data/music/Cuddly - main menu.ym');
+		this.player.LoadAndRun('data/music/Mindbomb.ym');
 		
 		// set the "Play/Ingame" Screen Object
 		me.state.set(me.state.PLAY, new PlayScreen());

@@ -1,4 +1,4 @@
-/* -----
+	/* -----
 
 	ressources
 		
@@ -9,21 +9,21 @@ var g_resources = [
 	{
 		name: "tileset",	
 		type:"image",	
-		src: "data/sprites/tileset.png"
+		src: "data/sprites/mindbomb.png"
 	},
 	
 	// background
 	{
 		name: "background",	
 		type:"image",	
-		src: "data/background/back.png"
+		src: "data/background/mindbomb.png"
 	},
 	
 	// main entity
 	{
 		name: "sprites",	
 		type:"image",	
-		src: "data/sprites/sprites.png"
+		src: "data/sprites/mindbomb_sprites.png"
 	},
 
 	
@@ -31,7 +31,7 @@ var g_resources = [
 	{
 		name: "menu",
 		type: "tmx",	
-		src: "data/menu.tmx"
+		src: "data/mindbomb.tmx"
 	}
 	
 	

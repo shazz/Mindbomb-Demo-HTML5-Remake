@@ -33,14 +33,23 @@
 			// walking animation
 			this.addAnimation ("walk",  [1,2,3,4,5,6,7]);
 			
-			// flying animation
+			// climbing animation
 			this.addAnimation ("climb",  [16,17,18,19,20]);
+			
+			// falling
+			this.addAnimation ("falling",  [23]);
+			
+			// falling
+			this.addAnimation ("waiting",  [0]);			
 			
 			// set default one
 			this.setCurrentAnimation("walk");
 			
 			// adjust animation timing
 			this.animationspeed = me.sys.fps / 40;
+			
+			// adjust collisionbox
+			//this.updateColRect(1, 1, 1, 1);
 			
 		},
 	
@@ -52,18 +61,37 @@
 		------			*/
 		update : function ()
 		{
-				
+			// manage all inputs !	
 			if (me.input.isKeyPressed('left'))
 			{
-				this.vel.x -= this.accel.x * me.timer.tick;
-				// flip the sprite
-				this.flipX(true);
+				// our character doesn't fly !
+				if(!this.falling)
+				{
+					this.setCurrentAnimation("walk");
+					this.vel.x -= this.accel.x * me.timer.tick;
+					// flip the sprite
+					this.flipX(true);
+				}
+				else
+				{
+					this.setCurrentAnimation("falling");
+				}				
 			}
+			
 			else if (me.input.isKeyPressed('right'))
 			{
-				this.vel.x += this.accel.x * me.timer.tick;
-				// unflip the sprite
-				this.flipX(false);
+				if(!this.falling)
+				{
+					this.setCurrentAnimation("walk");
+					this.vel.x += this.accel.x * me.timer.tick;
+					// unflip the sprite
+					this.flipX(false);
+					
+				}
+				else
+				{
+					this.setCurrentAnimation("falling");
+				}
 			}
 			
 			else if (me.input.isKeyPressed('up'))
@@ -78,7 +106,21 @@
 			
 			else 
 			{
-				// depends ?
+				if(!this.falling)
+				{	
+					this.vel.x = this.vel.y = 0;
+					this.setCurrentAnimation("waiting");
+				}
+				else if(this.onladder)
+				{
+					this.vel.x = this.vel.y = 0;
+					this.setCurrentAnimation("climb");
+				}
+				else
+				{
+					this.vel.x = 0;
+					this.setCurrentAnimation("falling");
+				}
 			}
 			
 			
@@ -88,32 +130,22 @@
 			// if climbing 
 			if (me.input.keyStatus('up') || me.input.keyStatus('down')) 
 			{	
-				// change animatiom if necessary
-				if (!this.isCurrentAnimation("climb"))
+				if(this.onladder)
 				{
-				 	this.setCurrentAnimation("climb");
+					if (!this.isCurrentAnimation("climb"))
+					{
+					 	this.setCurrentAnimation("climb");
+					}
 				}
 			}
 
-			// walking
-			else if (!this.setCurrentAnimation("walk"))
-			{
-				this.setCurrentAnimation("walk");	
-			}
-			
-			
 			// check if entity is moving
 			if (this.vel.x!=0||this.vel.y!=0)
 			{
-				// update objet animation is necessary
-				if (this.isCurrentAnimation("climb") && this.vel.x==0)
-				{
-					// don't update animation
-					return true
-				}
 				this.parent(this);
 				return true;
 			}
+			
 			return false;
 		}
 

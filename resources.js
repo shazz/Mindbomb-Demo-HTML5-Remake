@@ -7,7 +7,7 @@
 var g_resources = [	
 	// main tileset
 	{
-		name: "tileset",	
+		name: "mindbomb",	
 		type:"image",	
 		src: "data/sprites/mindbomb.png"
 	},
@@ -29,7 +29,7 @@ var g_resources = [
 	
 	// level 1
 	{
-		name: "menu",
+		name: "mindbomb",
 		type: "tmx",	
 		src: "data/mindbomb.tmx"
 	}

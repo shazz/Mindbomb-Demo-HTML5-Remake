@@ -92,7 +92,7 @@ var PlayScreen = me.ScreenObject.extend(
 	onResetEvent: function()
 	{	
 		// load a level
-		me.levelDirector.loadLevel("menu");
+		me.levelDirector.loadLevel("mindbomb");
 
 	},
 	

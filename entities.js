@@ -23,13 +23,13 @@
 			// set h/v velocity
 			// y velocity will be the falling speed
 			// x velocity will be used when climbing
-			this.setVelocity(4, 8);
+			this.setVelocity(5, 8);
 			
 			// don't use it here
 			//this.setMaxVelocity(4, 4);
 			
 			// add friction only for x vel
-			this.setFriction(0.5, 0);
+			this.setFriction(0.4, 0);
 						
 			// set the display to follow our position on both axis
 			me.game.viewport.follow(this.pos);
@@ -72,7 +72,7 @@
 			{
 				// we must allow him to go on x axis
 				// while on a ladder, right ?
-				if(!this.falling || this.onladder)
+				if(!this.falling)
 				{
 					this.vel.x -= this.accel.x * me.timer.tick;
 					// flip the sprite
@@ -81,7 +81,7 @@
 			}
 			else if (me.input.isKeyPressed('right'))
 			{
-				if(!this.falling || this.onladder)
+				if(!this.falling)
 				{
 					this.vel.x += this.accel.x * me.timer.tick;
 					// unflip the sprite

@@ -7,9 +7,9 @@
 var g_resources = [	
 	// main tileset
 	{
-		name: "mindbomb",	
+		name: "mindbomb32x32",	
 		type:"image",	
-		src: "data/sprites/mindbomb.png"
+		src: "data/sprites/mindbomb32x32.png"
 	},
 	
 	// background

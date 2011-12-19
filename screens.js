@@ -17,6 +17,10 @@ var TLBLoader = me.ScreenObject.extend({
 		
 		// background image
 		this.backgroundImg = me.loader.getImage("loader");		
+		
+		// font
+		this.loader_font = new me.BitmapFont("loader_font", {x:32,y:18});
+       		this.loader_font.set("left");
 
 		// setup a callback
 		me.loader.onProgress = this.onProgressUpdate.bind(this);
@@ -72,6 +76,16 @@ var TLBLoader = me.ScreenObject.extend({
 		// display the background
 		context.drawImage(this.backgroundImg, 0 ,0);	
 		
+		this.loader_font.draw(context, "NOW LOADING",	160, 80-18);
+		this.loader_font.draw(context, "THE MAIN MENU",	126, 102-18);
+		this.loader_font.draw(context, "CODING BY MANIKIN",	64, 150-18);
+		this.loader_font.draw(context, "ALL GRAPHIX AND",	96, 174-18);
+		this.loader_font.draw(context, "THE MEGADETH FONT",	64, 198-18);
+		this.loader_font.draw(context, "BY SPAZ",	224, 224-18);
+		this.loader_font.draw(context, "MUSIC BY MAD MAX",	64, 270-18);
+		this.loader_font.draw(context, "USE ARROW KEYS AND",	32, 320-18);
+		this.loader_font.draw(context, "SPACE TO ENTER DEMOS",	0, 342-18);
+		
 	},
 	
 	/*---
@@ -82,7 +96,7 @@ var TLBLoader = me.ScreenObject.extend({
 	onDestroyEvent : function()
 	{
 		// "nullify" all objects
-		this.backgroundImg = null;
+		this.backgroundImg = loader_font = null;
 	
   	},
 

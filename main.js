@@ -41,7 +41,7 @@ var jsApp	=
 		// manually load the background, since we need it to be loaded for the loader...
 		me.loader.load({name: "loader", type:"image", src: "data/background/loader.png"}, function() 
 		{
-			me.loader.load({name: "loader_font", type:"image", src: "data/fonts/loaderFont32x16.png"}, function() 
+			me.loader.load({name: "loader_font", type:"image", src: "data/fonts/loaderFonts32x16.png"}, function() 
 			{
 				// set all resources to be loaded
 				me.loader.onload = jsApp.loaded.bind(jsApp);

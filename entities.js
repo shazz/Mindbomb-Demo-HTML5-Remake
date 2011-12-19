@@ -21,11 +21,15 @@
 			this.parent(x, y, settings);
 			
 			// set h/v velocity
-			this.setVelocity(4, 2);
-			this.setMaxVelocity(4, 4);
+			// y velocity will be the falling speed
+			// x velocity will be used when climbing
+			this.setVelocity(4, 8);
 			
-			// add friction
-			this.setFriction(0.5);
+			// don't use it here
+			//this.setMaxVelocity(4, 4);
+			
+			// add friction only for x vel
+			this.setFriction(0.5, 0);
 						
 			// set the display to follow our position on both axis
 			me.game.viewport.follow(this.pos);
@@ -49,7 +53,9 @@
 			this.animationspeed = me.sys.fps / 40;
 			
 			// adjust collisionbox
-			//this.updateColRect(1, 1, 1, 1);
+			this.updateColRect(8, 48, -1, -1);
+			// some debugging stuff
+			//me.debug.renderHitBox = true;
 			
 		},
 	
@@ -64,80 +70,89 @@
 			// manage all inputs !	
 			if (me.input.isKeyPressed('left'))
 			{
-				// our character doesn't fly !
-				if(!this.falling)
+				// we must allow him to go on x axis
+				// while on a ladder, right ?
+				if(!this.falling || this.onladder)
 				{
-					this.setCurrentAnimation("walk");
 					this.vel.x -= this.accel.x * me.timer.tick;
 					// flip the sprite
 					this.flipX(true);
 				}
-				else
-				{
-					this.setCurrentAnimation("falling");
-				}				
 			}
-			
 			else if (me.input.isKeyPressed('right'))
 			{
-				if(!this.falling)
+				if(!this.falling || this.onladder)
 				{
-					this.setCurrentAnimation("walk");
 					this.vel.x += this.accel.x * me.timer.tick;
 					// unflip the sprite
 					this.flipX(false);
-					
-				}
-				else
-				{
-					this.setCurrentAnimation("falling");
 				}
 			}
-			
-			else if (me.input.isKeyPressed('up'))
+		
+			if (me.input.isKeyPressed('up'))
 			{	
-				this.doClimb(true);
+				if(this.onladder)
+				{
+					// doClimb is for pussies... ;)
+					this.vel.y = -this.accel.x * me.timer.tick;
+				}
 			}
-			
 			else if (me.input.isKeyPressed('down'))
 			{	
-				this.doClimb(false);
-			}
-			
-			else 
-			{
-				if(!this.falling)
-				{	
-					this.vel.x = this.vel.y = 0;
-					this.setCurrentAnimation("waiting");
-				}
-				else if(this.onladder)
+				if(!this.falling || this.onladder)
 				{
-					this.vel.x = this.vel.y = 0;
-					this.setCurrentAnimation("climb");
-				}
-				else
-				{
-					this.vel.x = 0;
-					this.setCurrentAnimation("falling");
+					// i use accel.x here so that we have the 
+					// same velocity when walking & climbing
+					this.vel.y = this.accel.x * me.timer.tick;
 				}
 			}
+			// else if on ladder cancel velocity
+			else if (this.onladder) {
+				this.vel.y = 0;
+			}
 			
+			// cancel x vel, in this case
+			if(this.falling && !this.onladder) {
+				this.vel.x = 0;
+			}
 			
 			// check & update player movement
 			this.updateMovement();
 			
-			// if climbing 
-			if (me.input.keyStatus('up') || me.input.keyStatus('down')) 
+			// check resulting vel, and if we are using the correct animation
+			if (this.onladder && (me.input.keyStatus('up') || me.input.keyStatus('down'))) 
 			{	
-				if(this.onladder)
+				if (this.vel.y!=0 && !this.isCurrentAnimation("climb"))
 				{
-					if (!this.isCurrentAnimation("climb"))
-					{
-					 	this.setCurrentAnimation("climb");
-					}
+				 	this.setCurrentAnimation("climb");
 				}
 			}
+			else if (!this.onladder)
+			{
+				// stand
+				if (this.vel.x==0&&this.vel.y==0) {
+					if (!this.isCurrentAnimation("waiting"))
+					{
+					 	this.setCurrentAnimation("waiting");
+					}
+				}
+				// walk 
+				else if (this.vel.x!=0) {
+					if (!this.isCurrentAnimation("walk"))
+					{
+					 	this.setCurrentAnimation("walk");
+					}
+				}
+				// fall
+				else if (this.vel.y!=0) {
+					if (!this.isCurrentAnimation("falling"))
+					{
+					 	this.setCurrentAnimation("falling");
+					}
+				}
+			} 
+			
+			
 
 			// check if entity is moving
 			if (this.vel.x!=0||this.vel.y!=0)
@@ -145,8 +160,9 @@
 				this.parent(this);
 				return true;
 			}
-			
-			return false;
+			// if not true waiting sprite is not displayed :)
+			// should add some "hadSpeed" flag 
+			return true;
 		}
 
 	});

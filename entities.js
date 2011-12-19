@@ -119,6 +119,11 @@
 			// check & update player movement
 			this.updateMovement();
 			
+			// check for collision with sthg
+			me.game.collide(this);
+			// actually we can also check here when we collide with 
+			// doors, by checking the object return by the function.			
+			
 			// check resulting vel, and if we are using the correct animation
 			if (this.onladder && (me.input.keyStatus('up') || me.input.keyStatus('down'))) 
 			{	
@@ -166,3 +171,41 @@
 		}
 
 	});
+	
+	/*****************************************
+	 *										 *
+	 *			a door entity				 *
+	 *										 *
+	 *****************************************/
+	var DoorEntity = me.InvisibleEntity.extend(
+	{	
+		init:function (x, y, settings)
+		{
+			// call the constructor
+			this.parent(x, y, settings);
+			
+			// settings.demo_name was defined in Tiled
+			this.demo_name = settings.demo_name;
+		},	
+
+		// collision notification, something (obj) touched the door !
+		onCollision : function (res, obj)
+		{
+			if (me.input.isKeyPressed('enter'))
+			{
+				// save the player last pos
+				
+				// if screen exists, go for it !
+				jsApp.entityPos = obj.pos.clone();
+				if(!eval("jsApp.ScreenID." + this.demo_name + "==undefined"))
+				{
+					me.state.change(this.demo_name);
+				}
+				else
+				{
+					me.state.change(jsApp.ScreenID.TODO);
+				}
+			}
+		},
+		
+	});	

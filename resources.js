@@ -32,7 +32,33 @@ var g_resources = [
 		name: "mindbomb",
 		type: "tmx",	
 		src: "data/mindbomb.tmx"
-	}
+	},
+	
+	/////////////////////////
+	// intro stuff
+	/////////////////////////
+	
+	// logoCarebears
+	{
+		name: "BigSprite",	
+		type:"image",	
+		src: "data/sprites/BigSprite.png"
+	},
+	
+	// font
+	{
+		name: "LoaderFonts",	
+		type:"image",	
+		src: "data/fonts/loaderFonts32x16.png"
+	},
+
+	// todo audio track
+	/*{
+		name: "case4two",		
+		type: "audio", 
+		src: "screens/todo/Case for Two.ym",	
+		channel : 1
+	}*/	
 	
 	
 ];

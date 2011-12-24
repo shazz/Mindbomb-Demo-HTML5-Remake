@@ -134,7 +134,9 @@ var PlayScreen = me.ScreenObject.extend(
 		
 		// start the main menu music 
 		this.YMPlayer.LoadAndRun('data/music/Mindbomb.ym');
-		CODEF_AUDIO_NODE.connect(CODEF_AUDIO_CONTEXT.destination);
+		if (this.YMPlayer.player != null) {
+			CODEF_AUDIO_NODE.connect(CODEF_AUDIO_CONTEXT.destination);
+		}
 
 	},
 	

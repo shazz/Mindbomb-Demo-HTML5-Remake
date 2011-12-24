@@ -29,7 +29,7 @@ var jsApp	=
 	{
 		
 		// init the video
-		if (!me.video.init('jsapp', 640, 400, false, 1.0))
+		if (!me.video.init('jsapp', 640, 390+56, false, 1.0))
 		{
 			alert("Sorry but your browser does not support html 5 canvas.");
 			return;
@@ -127,6 +127,10 @@ var PlayScreen = me.ScreenObject.extend(
 	{	
 		// load a level
 		me.levelDirector.loadLevel("mindbomb");
+		
+		// add the overlay object
+		me.game.add(new OverlayObject(1, 1),999);
+		me.game.sort();		
 		
 		// start the main menu music 
 		this.YMPlayer.LoadAndRun('data/music/Mindbomb.ym');

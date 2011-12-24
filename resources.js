@@ -34,6 +34,48 @@ var g_resources = [
 		src: "data/mindbomb.tmx"
 	},
 	
+	// main menu ressources
+	{
+		name: "sprite_l",
+		type: "image",	
+		src: "data/sprites/sprite_l.png"
+	},
+	{
+		name: "sprite_o",
+		type: "image",	
+		src: "data/sprites/sprite_o.png"
+	},
+	{
+		name: "sprite_s",
+		type: "image",	
+		src: "data/sprites/sprite_s.png"
+	},
+	{
+		name: "sprite_t",
+		type: "image",	
+		src: "data/sprites/sprite_t.png"
+	},
+	{
+		name: "sprite_b",
+		type: "image",	
+		src: "data/sprites/sprite_b.png"
+	},
+	{
+		name: "sprite_y",
+		type: "image",	
+		src: "data/sprites/sprite_y.png"
+	},
+	{
+		name: "fonts",
+		type: "image",	
+		src: "data/fonts/mindbomb64x64.png"
+	},
+	{
+		name: "menulogo",
+		type: "image",	
+		src: "data/sprites/logo.png"
+	},	
+	
 	/////////////////////////
 	// intro stuff
 	/////////////////////////
